@@ -25,6 +25,10 @@ export const Apartment = sequelize.define('apartment',{
             key:'tenant_id'
         }
     },
+    name:{
+        type: DataTypes.STRING(15),
+        allowNull: false
+    },
     address:{
         type: DataTypes.STRING(15),
         allowNull: false

@@ -8,4 +8,7 @@ const validate_token_1 = __importDefault(require("./validate-token"));
 const tenantHistory_1 = require("../controllers/tenantHistory");
 const router = (0, express_1.Router)();
 router.get('/', validate_token_1.default, tenantHistory_1.getTenantHistorys);
+router.get('/apartments/:apartment_id', validate_token_1.default, tenantHistory_1.getApartmentHistory);
+router.get('/tenants/:tenant_id', validate_token_1.default, tenantHistory_1.getTenantHistory);
+router.post('/', validate_token_1.default, tenantHistory_1.postTenantHistory);
 exports.default = router;

@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import validateToken from './validate-token';
-import { getTenantHistorys } from '../controllers/tenantHistory';
+import { getApartmentHistory, getTenantHistory, getTenantHistorys, postTenantHistory } from '../controllers/tenantHistory';
 
 const router = Router();
 
 router.get('/', validateToken, getTenantHistorys)
+router.get('/apartments/:apartment_id', validateToken, getApartmentHistory)
+router.get('/tenants/:tenant_id', validateToken, getTenantHistory)
+router.post('/', validateToken, postTenantHistory)
 
 export default router;

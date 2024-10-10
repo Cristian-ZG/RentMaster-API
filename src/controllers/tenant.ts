@@ -69,3 +69,29 @@ export const loginTenant = async (req: Request, res: Response) => {
 
     res.json(token);
 }
+
+//Modificar Arrendatario
+export const updateTenant = async (req:Request, res:Response) => {
+    const { body } = req;
+    const { tenant_id } = req.params;
+
+    try {
+        const tenant = await Tenant.findByPk(tenant_id);
+
+        if(tenant){
+            await tenant.update(body);
+            res.json({
+                msg: 'El arrendatario fue actulizado correctamente.'
+            })
+        } else {
+            res.status(404).json({
+                msg: 'No existe un arrendatario con el id: ' + tenant_id
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        res.json({
+            msg: 'Ocurrio un error.'
+        })
+    }
+}

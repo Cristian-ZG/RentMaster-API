@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginTenant = exports.newTenant = void 0;
+exports.updateTenant = exports.loginTenant = exports.newTenant = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const tenant_1 = require("../models/tenant");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -72,3 +72,29 @@ const loginTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     res.json(token);
 });
 exports.loginTenant = loginTenant;
+//Modificar Arrendatario
+const updateTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
+    const { tenant_id } = req.params;
+    try {
+        const tenant = yield tenant_1.Tenant.findByPk(tenant_id);
+        if (tenant) {
+            yield tenant.update(body);
+            res.json({
+                msg: 'El arrendatario fue actulizado correctamente.'
+            });
+        }
+        else {
+            res.status(404).json({
+                msg: 'No existe un arrendatario con el id: ' + tenant_id
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.json({
+            msg: 'Ocurrio un error.'
+        });
+    }
+});
+exports.updateTenant = updateTenant;

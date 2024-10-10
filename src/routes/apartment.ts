@@ -1,9 +1,13 @@
 import { Router } from 'express';
-import { getApartments } from '../controllers/apartment';
+import { deleteApartment, getApartment, getApartments, postApartment, updateApartment } from '../controllers/apartment';
 import validateToken from './validate-token';
 
 const router = Router();
 
 router.get('/', validateToken, getApartments)
+router.get('/:id', validateToken, getApartment)
+router.delete('/:id', validateToken, deleteApartment)
+router.post('/', validateToken, postApartment)
+router.put('/:id', validateToken, updateApartment)
 
 export default router;

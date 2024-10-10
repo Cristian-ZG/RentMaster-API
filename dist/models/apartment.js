@@ -30,6 +30,10 @@ exports.Apartment = connection_1.default.define('apartment', {
             key: 'tenant_id'
         }
     },
+    name: {
+        type: sequelize_1.DataTypes.STRING(15),
+        allowNull: false
+    },
     address: {
         type: sequelize_1.DataTypes.STRING(15),
         allowNull: false

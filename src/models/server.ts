@@ -35,7 +35,7 @@ class Server{
     midlewares() {
         // Parseo body
         this.app.use(express.json());
-        //Cros
+        //Cors
         this.app.use(cors());
     }
 

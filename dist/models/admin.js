@@ -23,7 +23,7 @@ exports.Admin = connection_1.default.define('admin', {
         allowNull: false
     },
     password: {
-        type: sequelize_1.DataTypes.STRING(20),
+        type: sequelize_1.DataTypes.STRING(90),
         allowNull: false
     },
     phone_number: {

@@ -26,11 +26,11 @@ export const Apartment = sequelize.define('apartment',{
         }
     },
     name:{
-        type: DataTypes.STRING(15),
+        type: DataTypes.STRING(20),
         allowNull: false
     },
     address:{
-        type: DataTypes.STRING(15),
+        type: DataTypes.STRING(30),
         allowNull: false
     },
     description:{

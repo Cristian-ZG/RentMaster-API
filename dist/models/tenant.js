@@ -23,7 +23,7 @@ exports.Tenant = connection_1.default.define('tenant', {
         allowNull: false
     },
     password: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING(90),
         allowNull: false
     },
     payment_status: {

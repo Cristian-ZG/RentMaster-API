@@ -20,6 +20,10 @@ const admin_1 = __importDefault(require("../routes/admin"));
 const admin_2 = require("./admin");
 const tenant_2 = require("./tenant");
 const apartment_2 = require("./apartment");
+const contract_1 = require("./contract");
+const payment_1 = require("./payment");
+const tenantHistory_1 = require("./tenantHistory");
+const ticket_1 = require("./ticket");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -42,7 +46,7 @@ class Server {
     midlewares() {
         // Parseo body
         this.app.use(express_1.default.json());
-        //Cros
+        //Cors
         this.app.use((0, cors_1.default)());
     }
     dbConnect() {
@@ -51,6 +55,10 @@ class Server {
                 yield admin_2.Admin.sync();
                 yield tenant_2.Tenant.sync();
                 yield apartment_2.Apartment.sync();
+                yield contract_1.Contract.sync();
+                yield payment_1.Payment.sync();
+                yield tenantHistory_1.TenantHistory.sync();
+                yield ticket_1.Ticket.sync();
                 console.log('Base de datos conectada correctamente.');
             }
             catch (error) {

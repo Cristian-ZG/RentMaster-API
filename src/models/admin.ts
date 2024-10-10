@@ -18,7 +18,7 @@ export const Admin = sequelize.define('admin',{
         allowNull: false
     },
     password:{
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(90),
         allowNull: false
     },
     phone_number:{

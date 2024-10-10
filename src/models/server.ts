@@ -6,6 +6,10 @@ import routesAdmin from "../routes/admin";
 import { Admin } from './admin';
 import { Tenant } from './tenant';
 import { Apartment } from './apartment';
+import { Contract } from './contract';
+import { Payment } from './payment';
+import { TenantHistory } from './tenantHistory';
+import { Ticket } from './ticket';
 
 class Server{
     private app: Application;
@@ -45,6 +49,10 @@ class Server{
             await Admin.sync();
             await Tenant.sync();
             await Apartment.sync();
+            await Contract.sync();
+            await Payment.sync();
+            await TenantHistory.sync();
+            await Ticket.sync();
             console.log('Base de datos conectada correctamente.')
         } catch (error) {
             console.error('Unable to connect to the database:', error);

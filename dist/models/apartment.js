@@ -31,11 +31,11 @@ exports.Apartment = connection_1.default.define('apartment', {
         }
     },
     name: {
-        type: sequelize_1.DataTypes.STRING(15),
+        type: sequelize_1.DataTypes.STRING(20),
         allowNull: false
     },
     address: {
-        type: sequelize_1.DataTypes.STRING(15),
+        type: sequelize_1.DataTypes.STRING(30),
         allowNull: false
     },
     description: {

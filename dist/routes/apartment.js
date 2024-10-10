@@ -8,4 +8,8 @@ const apartment_1 = require("../controllers/apartment");
 const validate_token_1 = __importDefault(require("./validate-token"));
 const router = (0, express_1.Router)();
 router.get('/', validate_token_1.default, apartment_1.getApartments);
+router.get('/:apartment_id', validate_token_1.default, apartment_1.getApartment);
+router.delete('/:apartment_id', validate_token_1.default, apartment_1.deleteApartment);
+router.post('/', validate_token_1.default, apartment_1.postApartment);
+router.put('/:apartment_id', validate_token_1.default, apartment_1.updateApartment);
 exports.default = router;

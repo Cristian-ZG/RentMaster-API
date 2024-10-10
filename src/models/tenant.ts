@@ -18,7 +18,7 @@ export const Tenant = sequelize.define('tenant',{
         allowNull: false
     },
     password:{
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(90),
         allowNull: false
     },
     payment_status:{

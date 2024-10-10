@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTenant = exports.loginTenant = exports.newTenant = void 0;
+exports.getTenant = exports.getTenants = exports.updateTenant = exports.loginTenant = exports.newTenant = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const tenant_1 = require("../models/tenant");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -98,3 +98,23 @@ const updateTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.updateTenant = updateTenant;
+//Obtener Arrendatarios
+const getTenants = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const listTenants = yield tenant_1.Tenant.findAll();
+    res.json(listTenants);
+});
+exports.getTenants = getTenants;
+//Obtener un Arrendatario especifico
+const getTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { tenant_id } = req.params;
+    const tenant = yield tenant_1.Tenant.findByPk(tenant_id);
+    if (tenant) {
+        res.json(tenant);
+    }
+    else {
+        res.status(404).json({
+            msg: 'No existe un arrendatario con el id: ' + tenant_id
+        });
+    }
+});
+exports.getTenant = getTenant;

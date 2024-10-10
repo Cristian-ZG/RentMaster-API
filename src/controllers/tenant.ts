@@ -95,3 +95,26 @@ export const updateTenant = async (req:Request, res:Response) => {
         })
     }
 }
+
+//Obtener Arrendatarios
+export const getTenants = async (req: Request, res: Response) => {
+
+    const listTenants = await Tenant.findAll();
+
+    res.json(listTenants)
+}
+
+//Obtener un Arrendatario especifico
+export const getTenant = async (req: Request, res: Response) => {
+
+    const { tenant_id } = req.params;
+    const tenant = await Tenant.findByPk(tenant_id);
+
+    if (tenant){
+        res.json(tenant)
+    } else {
+        res.status(404).json({
+            msg: 'No existe un arrendatario con el id: ' + tenant_id
+        })
+    }
+}

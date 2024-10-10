@@ -76,3 +76,30 @@ export const postTenantHistory = async (req: Request, res: Response) => {
         })
     }
 }
+
+//Actualizar un historial
+export const updateHistory = async (req: Request, res: Response) => {
+
+    const { body } = req;
+    const { history_id } = req.params;
+
+    try {
+        const history = await TenantHistory.findByPk(history_id);
+
+        if(history){
+            await history.update(body);
+            res.json({
+                msg: 'El historial fue actulizado correctamente.'
+            })
+        } else {
+            res.status(404).json({
+                msg: 'No existe un historial con el id: ' + history_id
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        res.json({
+            msg: 'Ocurrio un error.'
+        })
+    }
+}

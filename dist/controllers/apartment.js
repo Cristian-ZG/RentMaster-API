@@ -74,7 +74,7 @@ const updateApartment = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (apartment) {
             yield apartment.update(body);
             res.json({
-                msg: 'El producto fue actulizado correctamente.'
+                msg: 'El apartamento fue actulizado correctamente.'
             });
         }
         else {

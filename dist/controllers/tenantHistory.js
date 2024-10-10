@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postTenantHistory = exports.getTenantHistory = exports.getApartmentHistory = exports.getTenantHistorys = void 0;
+exports.updateHistory = exports.postTenantHistory = exports.getTenantHistory = exports.getApartmentHistory = exports.getTenantHistorys = void 0;
 const tenantHistory_1 = require("../models/tenantHistory");
 const apartment_1 = require("../models/apartment");
 const tenant_1 = require("../models/tenant");
@@ -80,3 +80,29 @@ const postTenantHistory = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.postTenantHistory = postTenantHistory;
+//Actualizar un historial
+const updateHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { body } = req;
+    const { history_id } = req.params;
+    try {
+        const history = yield tenantHistory_1.TenantHistory.findByPk(history_id);
+        if (history) {
+            yield history.update(body);
+            res.json({
+                msg: 'El historial fue actulizado correctamente.'
+            });
+        }
+        else {
+            res.status(404).json({
+                msg: 'No existe un historial con el id: ' + history_id
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.json({
+            msg: 'Ocurrio un error.'
+        });
+    }
+});
+exports.updateHistory = updateHistory;

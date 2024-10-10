@@ -11,4 +11,5 @@ router.get('/', validate_token_1.default, tenantHistory_1.getTenantHistorys);
 router.get('/apartments/:apartment_id', validate_token_1.default, tenantHistory_1.getApartmentHistory);
 router.get('/tenants/:tenant_id', validate_token_1.default, tenantHistory_1.getTenantHistory);
 router.post('/', validate_token_1.default, tenantHistory_1.postTenantHistory);
+router.put('/:history_id', validate_token_1.default, tenantHistory_1.updateHistory);
 exports.default = router;

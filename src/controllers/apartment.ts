@@ -72,7 +72,7 @@ export const updateApartment = async (req: Request, res: Response) => {
         if(apartment){
             await apartment.update(body);
             res.json({
-                msg: 'El producto fue actulizado correctamente.'
+                msg: 'El apartamento fue actulizado correctamente.'
             })
         } else {
             res.status(404).json({

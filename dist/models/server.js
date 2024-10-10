@@ -18,11 +18,12 @@ const apartment_1 = __importDefault(require("../routes/apartment"));
 const tenant_1 = __importDefault(require("../routes/tenant"));
 const admin_1 = __importDefault(require("../routes/admin"));
 const tenantHistory_1 = __importDefault(require("../routes/tenantHistory"));
+const payment_1 = __importDefault(require("../routes/payment"));
 const admin_2 = require("./admin");
 const tenant_2 = require("./tenant");
 const apartment_2 = require("./apartment");
 const contract_1 = require("./contract");
-const payment_1 = require("./payment");
+const payment_2 = require("./payment");
 const tenantHistory_2 = require("./tenantHistory");
 const ticket_1 = require("./ticket");
 class Server {
@@ -44,6 +45,7 @@ class Server {
         this.app.use('/api/tenants', tenant_1.default);
         this.app.use('/api/admins', admin_1.default);
         this.app.use('/api/tenantHistory', tenantHistory_1.default);
+        this.app.use('/api/payments', payment_1.default);
     }
     midlewares() {
         // Parseo body
@@ -58,7 +60,7 @@ class Server {
                 yield tenant_2.Tenant.sync();
                 yield apartment_2.Apartment.sync();
                 yield contract_1.Contract.sync();
-                yield payment_1.Payment.sync();
+                yield payment_2.Payment.sync();
                 yield tenantHistory_2.TenantHistory.sync();
                 yield ticket_1.Ticket.sync();
                 console.log('Base de datos conectada correctamente.');

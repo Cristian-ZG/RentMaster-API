@@ -8,7 +8,7 @@ const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../db/connection"));
 const tenant_1 = require("./tenant");
 exports.Payment = connection_1.default.define('payment', {
-    apyment_id: {
+    payment_id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,

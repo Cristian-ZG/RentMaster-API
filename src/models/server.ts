@@ -3,7 +3,8 @@ import cors from 'cors';
 import routesApartment from "../routes/apartment";
 import routesTenant from "../routes/tenant";
 import routesAdmin from "../routes/admin";
-import routesTenantHistory from "../routes/tenantHistory"
+import routesTenantHistory from "../routes/tenantHistory";
+import routesPayment from "../routes/payment"
 import { Admin } from './admin';
 import { Tenant } from './tenant';
 import { Apartment } from './apartment';
@@ -36,6 +37,7 @@ class Server{
         this.app.use('/api/tenants', routesTenant);
         this.app.use('/api/admins', routesAdmin);
         this.app.use('/api/tenantHistory', routesTenantHistory);
+        this.app.use('/api/payments', routesPayment);
     }
 
     midlewares() {

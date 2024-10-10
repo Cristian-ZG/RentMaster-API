@@ -3,7 +3,7 @@ import sequelize from '../db/connection';
 import { Tenant } from './tenant';
 
 export const Payment = sequelize.define('payment',{
-    apyment_id:{
+    payment_id:{
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,

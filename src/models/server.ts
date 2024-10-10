@@ -5,6 +5,7 @@ import routesTenant from "../routes/tenant";
 import routesAdmin from "../routes/admin";
 import routesTenantHistory from "../routes/tenantHistory";
 import routesPayment from "../routes/payment"
+import routesTicket from "../routes/ticket"
 import { Admin } from './admin';
 import { Tenant } from './tenant';
 import { Apartment } from './apartment';
@@ -38,6 +39,7 @@ class Server{
         this.app.use('/api/admins', routesAdmin);
         this.app.use('/api/tenantHistory', routesTenantHistory);
         this.app.use('/api/payments', routesPayment);
+        this.app.use('/api/tickets', routesTicket)
     }
 
     midlewares() {

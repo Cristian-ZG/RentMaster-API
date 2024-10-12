@@ -118,3 +118,21 @@ export const getTenant = async (req: Request, res: Response) => {
         })
     }
 }
+
+//Eliminar un arrendatario especifico
+export const deleteTenant = async (req: Request, res: Response) => {
+
+    const { tenant_id } = req.params;
+    const tenant = await Tenant.findByPk(tenant_id);
+
+    if(!tenant){
+        res.status(404).json({
+            msg: 'No existe un arrendatariocon el id: ' + tenant_id
+        })
+    } else {
+        await tenant.destroy();
+        res.json({
+            msg: 'El arrendatario fue eliminado correctamente.'
+        })
+    }
+}

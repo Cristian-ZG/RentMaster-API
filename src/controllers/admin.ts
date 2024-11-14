@@ -40,7 +40,7 @@ export const newAdmin = async (req: Request, res: Response) => {
     
 }
 
-// Login Administrador
+/*// Login Administrador
 export const loginAdmin = async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
@@ -68,4 +68,4 @@ export const loginAdmin = async (req: Request, res: Response) => {
     }, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
 
     res.json(token);
-}
+}*/

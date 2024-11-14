@@ -40,7 +40,7 @@ export const newTenant = async (req: Request, res: Response) => {
     
 }
 
-// Login Arrendatario
+/*// Login Arrendatario
 export const loginTenant = async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
@@ -68,7 +68,7 @@ export const loginTenant = async (req: Request, res: Response) => {
     }, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
 
     res.json(token);
-}
+}*/
 
 //Modificar Arrendatario
 export const updateTenant = async (req:Request, res:Response) => {

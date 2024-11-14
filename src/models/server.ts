@@ -7,6 +7,7 @@ import routesTenantHistory from "../routes/tenantHistory";
 import routesPayment from "../routes/payment"
 import routesTicket from "../routes/ticket"
 import routesContract from "../routes/contract"
+import routesLogin from "../routes/login"
 import { Admin } from './admin';
 import { Tenant } from './tenant';
 import { Apartment } from './apartment';
@@ -35,6 +36,7 @@ class Server{
     }
 
     routes(){
+        this.app.use('/api/login', routesLogin);
         this.app.use('/api/apartments', routesApartment);
         this.app.use('/api/tenants', routesTenant);
         this.app.use('/api/admins', routesAdmin);

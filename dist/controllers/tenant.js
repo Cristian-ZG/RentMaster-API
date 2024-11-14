@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTenant = exports.getTenants = exports.updateTenant = exports.loginTenant = exports.newTenant = void 0;
+exports.deleteTenant = exports.getTenant = exports.getTenants = exports.updateTenant = exports.loginTenant = exports.newTenant = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const tenant_1 = require("../models/tenant");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -118,3 +118,20 @@ const getTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getTenant = getTenant;
+//Eliminar un arrendatario especifico
+const deleteTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { tenant_id } = req.params;
+    const tenant = yield tenant_1.Tenant.findByPk(tenant_id);
+    if (!tenant) {
+        res.status(404).json({
+            msg: 'No existe un arrendatariocon el id: ' + tenant_id
+        });
+    }
+    else {
+        yield tenant.destroy();
+        res.json({
+            msg: 'El arrendatario fue eliminado correctamente.'
+        });
+    }
+});
+exports.deleteTenant = deleteTenant;

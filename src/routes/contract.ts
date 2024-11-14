@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import validateToken from './validate-token';
+import validateAdmin from './validate-admin';
 import { getApartmentContract, getContracts, getTenantContract, postContract, updateContract } from '../controllers/contract';
 
 const router = Router();
 
-router.post('/', validateToken, postContract);
-router.put('/:contract_id', validateToken, updateContract);
-router.get('/', validateToken, getContracts);
+router.post('/', validateAdmin, postContract);
+router.put('/:contract_id', validateAdmin, updateContract);
+router.get('/', validateAdmin, getContracts);
 router.get('/apartments/:apartment_id', validateToken, getApartmentContract);
 router.get('/tenants/:tenant_id',validateToken, getTenantContract);
 

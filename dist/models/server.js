@@ -21,6 +21,7 @@ const tenantHistory_1 = __importDefault(require("../routes/tenantHistory"));
 const payment_1 = __importDefault(require("../routes/payment"));
 const ticket_1 = __importDefault(require("../routes/ticket"));
 const contract_1 = __importDefault(require("../routes/contract"));
+const login_1 = __importDefault(require("../routes/login"));
 const admin_2 = require("./admin");
 const tenant_2 = require("./tenant");
 const apartment_2 = require("./apartment");
@@ -43,6 +44,7 @@ class Server {
         });
     }
     routes() {
+        this.app.use('/api/login', login_1.default);
         this.app.use('/api/apartments', apartment_1.default);
         this.app.use('/api/tenants', tenant_1.default);
         this.app.use('/api/admins', admin_1.default);

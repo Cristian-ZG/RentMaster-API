@@ -34,6 +34,10 @@ export const Ticket = sequelize.define('ticket',{
         type: DataTypes.CHAR(100),
         allowNull: false
     },
+    technician_name:{
+        type: DataTypes.CHAR(20),
+        allowNull: false
+    },
     status:{
         type: DataTypes.CHAR(20),
         allowNull: false

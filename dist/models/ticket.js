@@ -39,6 +39,10 @@ exports.Ticket = connection_1.default.define('ticket', {
         type: sequelize_1.DataTypes.CHAR(100),
         allowNull: false
     },
+    technician_name: {
+        type: sequelize_1.DataTypes.CHAR(20),
+        allowNull: true
+    },
     status: {
         type: sequelize_1.DataTypes.CHAR(20),
         allowNull: false

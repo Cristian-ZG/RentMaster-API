@@ -9,7 +9,7 @@ const validate_token_1 = __importDefault(require("./validate-token"));
 const validate_admin_1 = __importDefault(require("./validate-admin"));
 const router = (0, express_1.Router)();
 router.post('/', tenant_1.newTenant);
-router.post('/login', tenant_1.loginTenant);
+/*router.post('/login', loginTenant)*/
 router.get('/', validate_admin_1.default, tenant_1.getTenants);
 router.get('/:tenant_id', validate_token_1.default, tenant_1.getTenant);
 router.put('/:tenant_id', validate_token_1.default, tenant_1.updateTenant);

@@ -12,10 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginAdmin = exports.newAdmin = void 0;
+exports.newAdmin = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const admin_1 = require("../models/admin");
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // Agregar Admin
 const newAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, password, phone_number } = req.body;
@@ -47,27 +46,32 @@ const newAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.newAdmin = newAdmin;
-// Login Administrador
-const loginAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+/*// Login Administrador
+export const loginAdmin = async (req: Request, res: Response) => {
+
     const { email, password } = req.body;
+
     //Validacion si el arrendatario existe en la base de datos.
-    const admin = yield admin_1.Admin.findOne({ where: { email: email } });
-    if (!admin) {
+    const admin: any = await Admin.findOne({where:{email: email}})
+
+    if(!admin){
         return res.status(400).json({
             msg: 'No existe un administrador con el email: ' + email + ' en la base de datos.'
-        });
+        })
     }
+
     //Validamos password
-    const passwordValid = yield bcrypt_1.default.compare(password, admin.password);
-    if (!passwordValid) {
+    const passwordValid = await bcrypt.compare(password, admin.password)
+    if(!passwordValid){
         return res.status(400).json({
             msg: 'Contraseña incorrecta.'
-        });
+        })
     }
+
     //Generamos token
-    const token = jsonwebtoken_1.default.sign({
+    const token = jwt.sign({
         email: email
     }, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
+
     res.json(token);
-});
-exports.loginAdmin = loginAdmin;
+}*/ 

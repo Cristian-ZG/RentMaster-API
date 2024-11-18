@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import validateToken from './validate-token';
 import validateAdmin from './validate-admin';
-import { getApartmentTickets, getTenantTickets, getTickets, postTickets, updateTicket } from '../controllers/ticket';
+import { getApartmentTickets, getTenantTickets, getTicket, getTickets, postTickets, updateTicket } from '../controllers/ticket';
 
 const router = Router();
 
 router.get('/', validateAdmin, getTickets);
+router.get('/:ticket_id', validateAdmin,getTicket);
 router.get('/apartments/:apartment_id', validateToken, getApartmentTickets);
 router.get('/tenants/:tenant_id', validateToken, getTenantTickets);
 router.post('/', validateToken, postTickets);

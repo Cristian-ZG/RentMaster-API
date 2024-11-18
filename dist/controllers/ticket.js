@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateTicket = exports.postTickets = exports.getTenantTickets = exports.getApartmentTickets = exports.getTickets = void 0;
+exports.updateTicket = exports.postTickets = exports.getTenantTickets = exports.getApartmentTickets = exports.getTicket = exports.getTickets = void 0;
 const ticket_1 = require("../models/ticket");
 const apartment_1 = require("../models/apartment");
 const tenant_1 = require("../models/tenant");
@@ -19,6 +19,20 @@ const getTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.json(listTickets);
 });
 exports.getTickets = getTickets;
+//Obtener un ticket especifico
+const getTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { ticket_id } = req.params;
+    const ticket = yield ticket_1.Ticket.findByPk(ticket_id);
+    if (ticket) {
+        res.json(ticket);
+    }
+    else {
+        res.status(404).json({
+            msg: 'No existe un apartamento con el id: ' + ticket_id
+        });
+    }
+});
+exports.getTicket = getTicket;
 //Obtener Tickets para un apartamento especifico
 const getApartmentTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { apartment_id } = req.params;

@@ -11,6 +11,21 @@ export const getTickets = async (req: Request, res: Response) => {
     res.json(listTickets)
 }
 
+//Obtener un ticket especifico
+export const getTicket = async (req: Request, res: Response) => {
+
+    const { ticket_id } = req.params;
+    const ticket = await Ticket.findByPk(ticket_id);
+
+    if (ticket){
+        res.json(ticket)
+    } else {
+        res.status(404).json({
+            msg: 'No existe un apartamento con el id: ' + ticket_id
+        })
+    }
+}
+
 //Obtener Tickets para un apartamento especifico
 export const getApartmentTickets = async (req: Request, res: Response) => {
 

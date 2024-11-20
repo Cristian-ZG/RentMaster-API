@@ -29,6 +29,7 @@ const contract_2 = require("./contract");
 const payment_2 = require("./payment");
 const tenantHistory_2 = require("./tenantHistory");
 const ticket_2 = require("./ticket");
+const support_document_1 = require("./support_document");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -69,6 +70,7 @@ class Server {
                 yield payment_2.Payment.sync();
                 yield tenantHistory_2.TenantHistory.sync();
                 yield ticket_2.Ticket.sync();
+                yield support_document_1.SupportDocument.sync();
                 console.log('Base de datos conectada correctamente.');
             }
             catch (error) {

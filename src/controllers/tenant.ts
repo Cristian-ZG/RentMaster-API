@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { Tenant } from '../models/tenant';
 import jwt from 'jsonwebtoken';
+import { SupportDocument } from '../models/support_document';
 
 // Agregar Arrendatario
 export const newTenant = async (req: Request, res: Response) => {
@@ -136,3 +137,52 @@ export const deleteTenant = async (req: Request, res: Response) => {
         })
     }
 }
+
+export const cargaDocumentos = async (req: Request, res: Response) => {
+    try {
+        const { tenant_id } = req.body;
+        const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+
+        if (!files || Object.keys(files).length < 4) {
+            return res.status(400).json({ msg: 'Debes subir los 4 documentos requeridos.' });
+        }
+
+        const documents = Object.entries(files).map(([type, file]) => ({
+            tenant_id,
+            document_type: type,
+            file_url: file[0].path
+        }));
+
+        await SupportDocument.bulkCreate(documents);
+
+        res.status(201).json({ msg: 'Documentos subidos exitosamente.' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Error al subir los documentos.' });
+    }
+};
+
+export const getTenantDocuments = async (req: Request, res: Response) => {
+    const { tenant_id } = req.params;
+
+    try {
+        const documents = await SupportDocument.findAll({
+            where: { tenant_id }
+        });
+
+        if (documents.length === 0) {
+            return res.status(404).json({
+                msg: `No se encontraron documentos para el arrendatario con ID: ${tenant_id}`
+            });
+        }
+
+        res.status(200).json({
+            documents
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            msg: 'Hubo un error al obtener los documentos.'
+        });
+    }
+};

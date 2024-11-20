@@ -15,6 +15,7 @@ import { Contract } from './contract';
 import { Payment } from './payment';
 import { TenantHistory } from './tenantHistory';
 import { Ticket } from './ticket';
+import { SupportDocument } from './support_document';
 
 class Server{
     private app: Application;
@@ -63,6 +64,7 @@ class Server{
             await Payment.sync();
             await TenantHistory.sync();
             await Ticket.sync();
+            await SupportDocument.sync();
             console.log('Base de datos conectada correctamente.')
         } catch (error) {
             console.error('Unable to connect to the database:', error);

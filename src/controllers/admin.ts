@@ -36,36 +36,5 @@ export const newAdmin = async (req: Request, res: Response) => {
             msg: 'Ocurrio un error',
             error
         })
-    }
-    
+    }   
 }
-
-/*// Login Administrador
-export const loginAdmin = async (req: Request, res: Response) => {
-
-    const { email, password } = req.body;
-
-    //Validacion si el arrendatario existe en la base de datos.
-    const admin: any = await Admin.findOne({where:{email: email}})
-
-    if(!admin){
-        return res.status(400).json({
-            msg: 'No existe un administrador con el email: ' + email + ' en la base de datos.'
-        })
-    }
-
-    //Validamos password
-    const passwordValid = await bcrypt.compare(password, admin.password)
-    if(!passwordValid){
-        return res.status(400).json({
-            msg: 'Contraseña incorrecta.'
-        })
-    }
-
-    //Generamos token
-    const token = jwt.sign({
-        email: email
-    }, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
-
-    res.json(token);
-}*/

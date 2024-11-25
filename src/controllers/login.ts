@@ -12,11 +12,13 @@ export const loginAT = async (req: Request, res: Response) => {
         //Validamos si el usuario es un Administrador
         let user: any = await Admin.findOne({ where: { email } });
         let role = 'admin';
+        let userId = user?.admin_id; // Asignamos el ID desde la tabla admins
 
         //Si el usuario no se encuentra en los administradores validamos si es un arrendatario
         if (!user){
             user = await Tenant.findOne( { where: { email } });
             role = 'tenant';
+            userId = user?.tenant_id; // Asignamos el ID desde la tabla tenants
         }
 
         // Si el usuario no existe en ninguna de las tablas
@@ -34,8 +36,9 @@ export const loginAT = async (req: Request, res: Response) => {
             });
         }
 
-        // Generamos el token JWT, incluyendo el rol (admin o tenant) en el payload
+        // Generamos el token JWT, incluyendo el rol (admin o tenant) y el id en el payload
         const token = jwt.sign({
+            id: userId, // Añadimos el ID del usuario al token
             email: email,
             role: role  // Añadimos el rol al token
         }, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
@@ -43,13 +46,13 @@ export const loginAT = async (req: Request, res: Response) => {
         // Respondemos con el token y el rol
         res.json({
             token,
-            role
+            role,
+            id: userId
         });
 
     } catch (error){
         res.status(500).json({
             msg: 'Error en el servidor', error
         });
-    }
-    
+    } 
 }

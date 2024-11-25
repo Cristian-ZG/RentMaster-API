@@ -23,10 +23,12 @@ const loginAT = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //Validamos si el usuario es un Administrador
         let user = yield admin_1.Admin.findOne({ where: { email } });
         let role = 'admin';
+        let userId = user === null || user === void 0 ? void 0 : user.admin_id; // Asignamos el ID desde la tabla admins
         //Si el usuario no se encuentra en los administradores validamos si es un arrendatario
         if (!user) {
             user = yield tenant_1.Tenant.findOne({ where: { email } });
             role = 'tenant';
+            userId = user === null || user === void 0 ? void 0 : user.tenant_id; // Asignamos el ID desde la tabla tenants
         }
         // Si el usuario no existe en ninguna de las tablas
         if (!user) {
@@ -41,15 +43,17 @@ const loginAT = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 msg: 'Contraseña incorrecta.'
             });
         }
-        // Generamos el token JWT, incluyendo el rol (admin o tenant) en el payload
+        // Generamos el token JWT, incluyendo el rol (admin o tenant) y el id en el payload
         const token = jsonwebtoken_1.default.sign({
+            id: userId, // Añadimos el ID del usuario al token
             email: email,
             role: role // Añadimos el rol al token
         }, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
         // Respondemos con el token y el rol
         res.json({
             token,
-            role
+            role,
+            id: userId
         });
     }
     catch (error) {

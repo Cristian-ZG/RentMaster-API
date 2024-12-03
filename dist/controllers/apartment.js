@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getApartmentTenant = exports.updateApartment = exports.postApartment = exports.deleteApartment = exports.getApartment = exports.getApartments = void 0;
+exports.updateApartment = exports.postApartment = exports.deleteApartment = exports.getApartmentAdmin = exports.getApartmentTenant = exports.getApartment = exports.getApartments = void 0;
 const apartment_1 = require("../models/apartment");
 const tenant_1 = require("../models/tenant");
+const admin_1 = require("../models/admin");
 //Obtener Apartamentos
 const getApartments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listApartments = yield apartment_1.Apartment.findAll();
@@ -32,6 +33,50 @@ const getApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.getApartment = getApartment;
+//Obtener apartamentos para un arrendatario especifico
+const getApartmentTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { tenant_id } = req.params;
+    //Buscar apartamentos para el tenant
+    const apartment = yield apartment_1.Apartment.findAll({
+        where: { tenant_id: tenant_id },
+        include: [{
+                model: tenant_1.Tenant,
+                attributes: ["tenant_id", "name", "email"]
+            }],
+        order: [['createdAt', 'DESC']]
+    });
+    if (apartment.length > 0) {
+        res.json(apartment);
+    }
+    else {
+        res.status(404).json({
+            msg: 'No existen apartamentos para el arrendatario con el id: ' + tenant_id
+        });
+    }
+});
+exports.getApartmentTenant = getApartmentTenant;
+//Obtener apartamentos para un adminespecifico
+const getApartmentAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { admin_id } = req.params;
+    //Buscar apartamentos para el admin
+    const apartment = yield apartment_1.Apartment.findAll({
+        where: { admin_id: admin_id },
+        include: [{
+                model: admin_1.Admin,
+                attributes: ["admin_id", "name"]
+            }],
+        order: [['createdAt', 'DESC']]
+    });
+    if (apartment.length > 0) {
+        res.json(apartment);
+    }
+    else {
+        res.status(404).json({
+            msg: 'No existen apartamentos para el administrador con el id: ' + admin_id
+        });
+    }
+});
+exports.getApartmentAdmin = getApartmentAdmin;
 //Eliminar un Apartamento especifico
 const deleteApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { apartment_id } = req.params;
@@ -92,25 +137,3 @@ const updateApartment = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.updateApartment = updateApartment;
-//Obtener apartamentos para un arrendatario especifico
-const getApartmentTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { tenant_id } = req.params;
-    //Buscar apartamentos para el tenant
-    const apartment = yield apartment_1.Apartment.findAll({
-        where: { tenant_id: tenant_id },
-        include: [{
-                model: tenant_1.Tenant,
-                attributes: ["tenant_id", "name", "email"]
-            }],
-        order: [['createdAt', 'DESC']]
-    });
-    if (apartment.length > 0) {
-        res.json(apartment);
-    }
-    else {
-        res.status(404).json({
-            msg: 'No existe un apartamento para el arrendatario con el id: ' + tenant_id
-        });
-    }
-});
-exports.getApartmentTenant = getApartmentTenant;

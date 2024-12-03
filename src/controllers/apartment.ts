@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Apartment } from '../models/apartment';
+import { Tenant } from '../models/tenant';
 
 //Obtener Apartamentos
 export const getApartments = async (req: Request, res: Response) => {
@@ -85,4 +86,27 @@ export const updateApartment = async (req: Request, res: Response) => {
             msg: 'Ocurrio un error.'
         })
     }
+}
+
+//Obtener apartamentos para un arrendatario especifico
+export const getApartmentTenant = async (req: Request, res: Response) => {
+    const { tenant_id } = req.params;
+    //Buscar apartamentos para el tenant
+    const apartment = await Apartment.findAll({
+        where: { tenant_id: tenant_id},
+        include:[{
+            model: Tenant,
+            attributes: ["tenant_id","name","email"]
+        }],
+        order:[['createdAt', 'DESC']]
+    });
+
+    if (apartment.length > 0){
+        res.json(apartment);
+    } else {
+        res.status(404).json({
+            msg: 'No existe un apartamento para el arrendatario con el id: ' + tenant_id
+        })
+    }
+
 }

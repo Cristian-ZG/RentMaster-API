@@ -13,4 +13,5 @@ router.get('/:apartment_id', validate_token_1.default, apartment_1.getApartment)
 router.delete('/:apartment_id', validate_admin_1.default, apartment_1.deleteApartment);
 router.post('/', validate_admin_1.default, apartment_1.postApartment);
 router.put('/:apartment_id', validate_admin_1.default, apartment_1.updateApartment);
+router.get('/tenant/:tenant_id', validate_token_1.default, apartment_1.getApartmentTenant);
 exports.default = router;

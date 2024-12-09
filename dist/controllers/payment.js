@@ -9,9 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePayment = exports.postPayment = exports.getPayment = void 0;
+exports.updatePayment = exports.postPayment = exports.getPayment = exports.getPayments = void 0;
 const payment_1 = require("../models/payment");
 const tenant_1 = require("../models/tenant");
+//Obtener Historial de Pagos
+const getPayments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const listPayments = yield payment_1.Payment.findAll();
+    res.json(listPayments);
+});
+exports.getPayments = getPayments;
 //Obtener un Historial de pagos para un arrendatario especifico
 const getPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;

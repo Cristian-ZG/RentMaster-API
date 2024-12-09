@@ -23,11 +23,9 @@ export const Payment = sequelize.define('payment',{
     },
     payment_date:{
         type: DataTypes.DATE,
-        allowNull: false
     },
     payment_method:{
         type: DataTypes.CHAR(20),
-        allowNull: false
     },
     status:{
         type: DataTypes.CHAR(20),

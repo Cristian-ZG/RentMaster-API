@@ -2,6 +2,14 @@ import { Request, Response } from 'express';
 import { Payment } from '../models/payment';
 import { Tenant } from '../models/tenant';
 
+//Obtener Historial de Pagos
+export const getPayments = async (req: Request, res: Response) => {
+
+    const listPayments = await Payment.findAll();
+
+    res.json(listPayments)
+}
+
 //Obtener un Historial de pagos para un arrendatario especifico
 export const getPayment = async (req: Request, res: Response) => {
 

@@ -8,6 +8,7 @@ import routesPayment from "../routes/payment"
 import routesTicket from "../routes/ticket"
 import routesContract from "../routes/contract"
 import routesLogin from "../routes/login"
+import routesBilling from "../routes/billing"
 import { Admin } from './admin';
 import { Tenant } from './tenant';
 import { Apartment } from './apartment';
@@ -45,6 +46,7 @@ class Server{
         this.app.use('/api/payments', routesPayment);
         this.app.use('/api/tickets', routesTicket);
         this.app.use('/api/contracts', routesContract);
+        this.app.use('/api/billing', routesBilling);
     }
 
     midlewares() {

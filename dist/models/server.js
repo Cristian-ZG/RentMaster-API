@@ -22,6 +22,7 @@ const payment_1 = __importDefault(require("../routes/payment"));
 const ticket_1 = __importDefault(require("../routes/ticket"));
 const contract_1 = __importDefault(require("../routes/contract"));
 const login_1 = __importDefault(require("../routes/login"));
+const billing_1 = __importDefault(require("../routes/billing"));
 const admin_2 = require("./admin");
 const tenant_2 = require("./tenant");
 const apartment_2 = require("./apartment");
@@ -53,6 +54,7 @@ class Server {
         this.app.use('/api/payments', payment_1.default);
         this.app.use('/api/tickets', ticket_1.default);
         this.app.use('/api/contracts', contract_1.default);
+        this.app.use('/api/billing', billing_1.default);
     }
     midlewares() {
         // Parseo body

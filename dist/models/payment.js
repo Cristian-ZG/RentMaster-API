@@ -24,13 +24,13 @@ exports.Payment = connection_1.default.define('payment', {
     },
     amount: {
         type: sequelize_1.DataTypes.DOUBLE,
+        allowNull: false
     },
     payment_date: {
         type: sequelize_1.DataTypes.DATE,
     },
     payment_method: {
         type: sequelize_1.DataTypes.CHAR(20),
-        allowNull: false
     },
     status: {
         type: sequelize_1.DataTypes.CHAR(20),

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import PDFDocument from 'pdfkit';
 import { Tenant } from '../models/tenant';
 import { Contract } from '../models/contract';
+import { Payment } from '../models/payment';
 import fs from 'fs';
 import path from 'path';
 import bwipJs from 'bwip-js';
@@ -10,24 +11,35 @@ export const generateInvoice = async (req: Request, res: Response) => {
     try {
         const { tenant_id } = req.params;
 
-        // Consultar datos del arrendatario
+        //Consultar datos del arrendatario
         const tenant = await Tenant.findByPk(tenant_id);
         if (!tenant) {
             return res.status(404).json({ message: 'Arrendatario no encontrado' });
         }
 
-        // Consultar datos del contrato
+        //Consultar datos del contrato
         const contract = await Contract.findOne({ where: { tenant_id: tenant_id } });
         if (!contract) {
             return res.status(404).json({ message: 'Contrato no encontrado' });
         }
 
-        // Obtener las propiedades del arrendatario y el contrato
+        //Consultar datos del pago
+        const payment = await Payment.findOne({ where: { tenant_id: tenant_id }});
+        if (!payment){
+            return res.status(404).json({ message: 'Pago no encontrado.'});
+        }
+
+        // Obtener las propiedades del arrendatario, el contrato y el pago
         const tenantName = tenant.get('name') as string;
         const tenantEmail = tenant.get('email') as string;
         const contractAmount = contract.get('amount') as number;
         const contractPaymentMethod = contract.get('payment_Method') as string;
         const contractStatus = contract.get('status') as string;
+        const contractID = contract.get('contract_id') as number;
+        const paymentID = payment.get('payment_id') as number;
+        const paymentAmount = payment.get('amount') as number;
+        const paymentStatus = payment.get('status') as string;
+        const paymentPaymentMethod = payment.get('payment_method') as string;
 
         // Crear el documento PDF
         const doc = new PDFDocument({ margin: 50 });
@@ -74,6 +86,12 @@ export const generateInvoice = async (req: Request, res: Response) => {
             .text('Factura')
             .moveDown();
 
+        doc
+            .fontSize(12)
+            .text(`Número del contrato: ${contractID}`)
+            .text(`Número del pago: ${paymentID}`)
+            .moveDown();
+
         // **Datos del Arrendatario**
         doc
             .fontSize(12)
@@ -84,18 +102,19 @@ export const generateInvoice = async (req: Request, res: Response) => {
         // **Datos del Contrato**
         doc
             .fontSize(12)
-            .text(`Monto: $${contractAmount}`)
-            .text(`Método de Pago: ${contractPaymentMethod}`)
+            .text(`Monto: $${paymentAmount}`)
+            .text(`Método de Pago: ${paymentPaymentMethod}`)
             .text(`Estado del contrato: ${contractStatus}`)
+            .text(`Estado del pago: ${paymentStatus}`)
             .moveDown();
 
         // **Resumen de Pago**
         doc
             .fontSize(14)
-            .text('Resumen de Pago', { underline: true })
+            .text(`Total: $${paymentAmount}`, { underline: true })
             .moveDown()
             .fontSize(12)
-            .text(`Monto Mensual: $${contractAmount}`)
+            //.text(`Monto Mensual: $${contractAmount}`)
             .moveDown();
 
         // Generar el código de barras como imagen

@@ -16,28 +16,39 @@ exports.generateInvoice = void 0;
 const pdfkit_1 = __importDefault(require("pdfkit"));
 const tenant_1 = require("../models/tenant");
 const contract_1 = require("../models/contract");
+const payment_1 = require("../models/payment");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const bwip_js_1 = __importDefault(require("bwip-js"));
 const generateInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { tenant_id } = req.params;
-        // Consultar datos del arrendatario
+        //Consultar datos del arrendatario
         const tenant = yield tenant_1.Tenant.findByPk(tenant_id);
         if (!tenant) {
             return res.status(404).json({ message: 'Arrendatario no encontrado' });
         }
-        // Consultar datos del contrato
+        //Consultar datos del contrato
         const contract = yield contract_1.Contract.findOne({ where: { tenant_id: tenant_id } });
         if (!contract) {
             return res.status(404).json({ message: 'Contrato no encontrado' });
         }
-        // Obtener las propiedades del arrendatario y el contrato
+        //Consultar datos del pago
+        const payment = yield payment_1.Payment.findOne({ where: { tenant_id: tenant_id } });
+        if (!payment) {
+            return res.status(404).json({ message: 'Pago no encontrado.' });
+        }
+        // Obtener las propiedades del arrendatario, el contrato y el pago
         const tenantName = tenant.get('name');
         const tenantEmail = tenant.get('email');
         const contractAmount = contract.get('amount');
         const contractPaymentMethod = contract.get('payment_Method');
         const contractStatus = contract.get('status');
+        const contractID = contract.get('contract_id');
+        const paymentID = payment.get('payment_id');
+        const paymentAmount = payment.get('amount');
+        const paymentStatus = payment.get('status');
+        const paymentPaymentMethod = payment.get('payment_method');
         // Crear el documento PDF
         const doc = new pdfkit_1.default({ margin: 50 });
         // Configuración headers
@@ -74,6 +85,11 @@ const generateInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function
             .fontSize(20)
             .text('Factura')
             .moveDown();
+        doc
+            .fontSize(12)
+            .text(`Número del contrato: ${contractID}`)
+            .text(`Número del pago: ${paymentID}`)
+            .moveDown();
         // **Datos del Arrendatario**
         doc
             .fontSize(12)
@@ -83,17 +99,18 @@ const generateInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function
         // **Datos del Contrato**
         doc
             .fontSize(12)
-            .text(`Monto: $${contractAmount}`)
-            .text(`Método de Pago: ${contractPaymentMethod}`)
+            .text(`Monto: $${paymentAmount}`)
+            .text(`Método de Pago: ${paymentPaymentMethod}`)
             .text(`Estado del contrato: ${contractStatus}`)
+            .text(`Estado del pago: ${paymentStatus}`)
             .moveDown();
         // **Resumen de Pago**
         doc
             .fontSize(14)
-            .text('Resumen de Pago', { underline: true })
+            .text(`Total: $${paymentAmount}`, { underline: true })
             .moveDown()
             .fontSize(12)
-            .text(`Monto Mensual: $${contractAmount}`)
+            //.text(`Monto Mensual: $${contractAmount}`)
             .moveDown();
         // Generar el código de barras como imagen
         const barcodeBuffer = yield bwip_js_1.default.toBuffer({

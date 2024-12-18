@@ -24,7 +24,10 @@ export const generateInvoice = async (req: Request, res: Response) => {
         }
 
         //Consultar datos del pago
-        const payment = await Payment.findOne({ where: { tenant_id: tenant_id }});
+        const payment = await Payment.findOne({
+            where: { tenant_id: tenant_id },
+            order: [['updatedAt', 'DESC']] // Ordenar por fecha de actualización descendente
+        });
         if (!payment){
             return res.status(404).json({ message: 'Pago no encontrado.'});
         }

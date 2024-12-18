@@ -34,7 +34,10 @@ const generateInvoice = (req, res) => __awaiter(void 0, void 0, void 0, function
             return res.status(404).json({ message: 'Contrato no encontrado' });
         }
         //Consultar datos del pago
-        const payment = yield payment_1.Payment.findOne({ where: { tenant_id: tenant_id } });
+        const payment = yield payment_1.Payment.findOne({
+            where: { tenant_id: tenant_id },
+            order: [['updatedAt', 'DESC']] // Ordenar por fecha de actualización descendente
+        });
         if (!payment) {
             return res.status(404).json({ message: 'Pago no encontrado.' });
         }

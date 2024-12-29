@@ -67,7 +67,7 @@ class Server{
             await TenantHistory.sync();
             await Ticket.sync();
             await SupportDocument.sync();
-            console.log('Base de datos conectada correctamente.')
+            console.log('Base de datos conectada correctamente.');
         } catch (error) {
             console.error('Unable to connect to the database:', error);
         }

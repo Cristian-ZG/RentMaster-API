@@ -3,15 +3,15 @@ import { Apartment } from '../models/apartment';
 import { Tenant } from '../models/tenant';
 import { Admin } from '../models/admin';
 
-//Obtener Apartamentos
+//Obtener todos Apartamentos registrados.
 export const getApartments = async (req: Request, res: Response) => {
 
     const listApartments = await Apartment.findAll();
 
-    res.json(listApartments)
-}
+    res.json(listApartments);
+};
 
-//Obtener un Apartamento especifico
+//Obtener un Apartamento especifico segun el ID.
 export const getApartment = async (req: Request, res: Response) => {
 
     const { apartment_id } = req.params;
@@ -21,39 +21,39 @@ export const getApartment = async (req: Request, res: Response) => {
         res.json(apartment)
     } else {
         res.status(404).json({
-            msg: 'No existe un apartamento con el id: ' + apartment_id
-        })
+            msg: `No existe un apartamento con el id: ${apartment_id}`
+        });
     }
-}
+};
 
-//Obtener apartamentos para un arrendatario especifico
+//Obtener apartamentos para un arrendatario especifico segun el ID.
 export const getApartmentTenant = async (req: Request, res: Response) => {
     const { tenant_id } = req.params;
-    //Buscar apartamentos para el tenant
-    const apartment = await Apartment.findAll({
+    //Buscar apartamentos para el tenant.
+    const apartments = await Apartment.findAll({
         where: { tenant_id: tenant_id},
         include:[{
             model: Tenant,
             attributes: ["tenant_id","name","email"]
         }],
         order:[['createdAt', 'DESC']]
-    });
+    })
 
-    if (apartment.length > 0){
-        res.json(apartment);
+    if (apartments.length > 0){
+        res.json(apartments);
     } else {
         res.status(404).json({
-            msg: 'No existen apartamentos para el arrendatario con el id: ' + tenant_id
-        })
+            msg: `No existen apartamentos para el arrendatario con el id: ${tenant_id}`,
+            apartments: [],
+        });
     }
+};
 
-}
-
-//Obtener apartamentos para un adminespecifico
+//Obtener apartamentos para un administrador especifico segun su ID.
 export const getApartmentAdmin = async (req: Request, res: Response) => {
     const { admin_id } = req.params;
-    //Buscar apartamentos para el admin
-    const apartment = await Apartment.findAll({
+    //Buscar apartamentos para el admin.
+    const apartments = await Apartment.findAll({
         where: { admin_id: admin_id},
         include:[{
             model: Admin,
@@ -62,17 +62,17 @@ export const getApartmentAdmin = async (req: Request, res: Response) => {
         order:[['createdAt', 'DESC']]
     });
 
-    if (apartment.length > 0){
-        res.json(apartment);
+    if (apartments.length > 0){
+        res.json(apartments);
     } else {
         res.status(404).json({
-            msg: 'No existen apartamentos para el administrador con el id: ' + admin_id
-        })
+            msg: `No existen apartamentos para el administrador con el id: ${admin_id}`,
+            apartments: [],
+        });
     }
+};
 
-}
-
-//Eliminar un Apartamento especifico
+//Eliminar un Apartamento especifico segun su ID.
 export const deleteApartment = async (req: Request, res: Response) => {
 
     const { apartment_id } = req.params;
@@ -81,16 +81,16 @@ export const deleteApartment = async (req: Request, res: Response) => {
     if(!apartment){
         res.status(404).json({
             msg: 'No existe un apartamento con el id: ' + apartment_id
-        })
+        });
     } else {
         await apartment.destroy();
         res.json({
             msg: 'El apartamento fue eliminado correctamente.'
-        })
+        });
     }
-}
+};
 
-//Agregar un Apartamento
+//Agregar un Apartamento.
 export const postApartment = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -99,16 +99,15 @@ export const postApartment = async (req: Request, res: Response) => {
         await Apartment.create(body);
         res.json({
             msg: 'El apartamento fue agregado correctamente.'
-        })
+        });
     } catch (error) {
-        console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};
 
-//Actualizar un Apartamento
+//Actualizar un Apartamento.
 export const updateApartment = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -125,12 +124,11 @@ export const updateApartment = async (req: Request, res: Response) => {
         } else {
             res.status(404).json({
                 msg: 'No existe un apartamento con el id: ' + apartment_id
-            })
+            });
         }
     } catch (error) {
-        console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};

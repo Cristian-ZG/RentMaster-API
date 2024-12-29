@@ -3,15 +3,15 @@ import { Ticket } from '../models/ticket';
 import { Apartment } from '../models/apartment';
 import { Tenant } from '../models/tenant';
 
-//Obtener tickets
+//Obtener tickets.
 export const getTickets = async (req: Request, res: Response) => {
 
     const listTickets = await Ticket.findAll();
 
-    res.json(listTickets)
-}
+    res.json(listTickets);
+};
 
-//Obtener un ticket especifico
+//Obtener un ticket especifico.
 export const getTicket = async (req: Request, res: Response) => {
 
     const { ticket_id } = req.params;
@@ -21,17 +21,17 @@ export const getTicket = async (req: Request, res: Response) => {
         res.json(ticket)
     } else {
         res.status(404).json({
-            msg: 'No existe un apartamento con el id: ' + ticket_id
-        })
+            msg: `No existe un apartamento con el id: ${ticket_id}`
+        });
     }
-}
+};
 
-//Obtener Tickets para un apartamento especifico
+//Obtener Tickets para un apartamento especifico.
 export const getApartmentTickets = async (req: Request, res: Response) => {
 
     const { apartment_id } = req.params;
 
-    // Busca el historial de tickets para el apartamento específico
+    // Busca el historial de tickets para el apartamento específico.
     const history = await Ticket.findAll({
         where: {apartment_id: apartment_id},
         include:[{
@@ -45,12 +45,12 @@ export const getApartmentTickets = async (req: Request, res: Response) => {
         res.json(history);
     } else {
         res.status(404).json({
-            msg: 'No existen tickets para el apartamento con el id: ' + apartment_id
-        })
+            msg: `No existen tickets para el apartamento con el id: ${apartment_id}`
+        });
     }
-}
+};
 
-//Obtener Tickets para un arrendatario especifico
+//Obtener Tickets para un arrendatario especifico.
 export const getTenantTickets = async (req: Request, res: Response) => {
 
     const { tenant_id } = req.params;
@@ -69,12 +69,12 @@ export const getTenantTickets = async (req: Request, res: Response) => {
         res.json(history);
     } else {
         res.status(404).json({
-            msg: 'No existen tickets para el arrendatario con el id: ' + tenant_id
-        })
+            msg: `No existen tickets para el arrendatario con el id: ${tenant_id}`
+        });
     }
-}
+};
 
-//Agregar un ticket
+//Agregar un ticket.
 export const postTickets = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -88,11 +88,11 @@ export const postTickets = async (req: Request, res: Response) => {
         console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};
 
-//Actualizar un ticket
+//Actualizar un ticket.
 export const updateTicket = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -108,13 +108,13 @@ export const updateTicket = async (req: Request, res: Response) => {
             })
         } else {
             res.status(404).json({
-                msg: 'No existe un ticket con el id: ' + ticket_id
+                msg: `No existe un ticket con el id: ${ticket_id}`
             })
         }
     } catch (error) {
         console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};

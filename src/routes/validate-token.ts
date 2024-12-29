@@ -6,23 +6,22 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
 
 
     if (headerToken != undefined && headerToken.startsWith('Bearer ')) {
-        // Tiene token
+        //Tiene token.
         try {
             const bearerToken = headerToken.slice(7);
-            jwt.verify(bearerToken, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
+            jwt.verify(bearerToken, process.env.SECRET_KEY || 'tofob!owr9spoV1ga4Oz');
             next()
         } catch (error) {
             res.status(401).json({
                 msg: 'token no valido.'
-            })
+            });
         }
 
     } else {
         res.status(401).json({
             msg: 'Acceso denegado'
-        })
+        });
     }
-
-}
+};
 
 export default validateToken;

@@ -7,11 +7,11 @@ const validateAdmin = (req: Request, res: Response, next: NextFunction) => {
     if (headerToken && headerToken.startsWith('Bearer ')) {
         try {
             const bearerToken = headerToken.slice(7);
-            const decoded: any = jwt.verify(bearerToken, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
+            const decoded: any = jwt.verify(bearerToken, process.env.SECRET_KEY || 'tofob!owr9spoV1ga4Oz');
 
-            // Validamos que el rol sea "admin"
+            //Validamos que el rol sea "admin".
             if (decoded.role === 'admin') {
-                next(); // Permite el acceso si el usuario es administrador
+                next(); //Permite el acceso si el usuario es administrador.
             } else {
                 res.status(403).json({
                     msg: 'Acceso denegado: No tienes permisos de administrador.'

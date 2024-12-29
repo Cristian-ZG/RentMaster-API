@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const tenantId = req.body.tenant_id;
 
-        // Crear la carpeta para los documentos del arrendatario si no existe
+        //Crear la carpeta para los documentos del arrendatario si no existe.
         const dir = path.join(__dirname, '../uploads/tenants', tenantId);
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
-    limits: { fileSize: 2 * 1024 * 1024 }, // Máximo 2MB
+    limits: { fileSize: 2 * 1024 * 1024 }, //Máximo 2MB.
     fileFilter: (req, file, cb) => {
         const isPdf = file.mimetype === 'application/pdf';
         if (isPdf) {

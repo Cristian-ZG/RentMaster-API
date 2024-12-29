@@ -2,20 +2,20 @@ import { Request, Response } from 'express';
 import { Payment } from '../models/payment';
 import { Tenant } from '../models/tenant';
 
-//Obtener Historial de Pagos
+//Obtener Historial de Pagos.
 export const getPayments = async (req: Request, res: Response) => {
 
     const listPayments = await Payment.findAll();
 
-    res.json(listPayments)
-}
+    res.json(listPayments);
+};
 
-//Obtener un Historial de pagos para un arrendatario especifico
+//Obtener un Historial de pagos para un arrendatario especifico.
 export const getPayment = async (req: Request, res: Response) => {
 
     const { tenant_id } = req.params;
 
-    // Busca el historial de pagos para el arrendatario específico
+    //Busca el historial de pagos para el arrendatario específico.
     const payment = await Payment.findAll({
         where: {tenant_id: tenant_id},
         include:[{
@@ -29,12 +29,12 @@ export const getPayment = async (req: Request, res: Response) => {
         res.json(payment);
     } else {
         res.status(404).json({
-            msg: 'No existe un historial de pagos para el arrendatario con el id: ' + tenant_id
-        })
+            msg: `No existe un historial de pagos para el arrendatario con el id: ${tenant_id}`
+        });
     }
-}
+};
 
-//Agregar un pago
+//Agregar un pago.
 export const postPayment = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -43,16 +43,16 @@ export const postPayment = async (req: Request, res: Response) => {
         await Payment.create(body);
         res.json({
             msg: 'El pago fue agregado correctamente.'
-        })
+        });
     } catch (error) {
         console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};
 
-//Actualizar un pago
+//Actualizar un pago.
 export const updatePayment = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -65,16 +65,16 @@ export const updatePayment = async (req: Request, res: Response) => {
             await payment.update(body);
             res.json({
                 msg: 'El historial de pago fue actulizado correctamente.'
-            })
+            });
         } else {
             res.status(404).json({
-                msg: 'No existe un historial de pago con el id: ' + payment_id
-            })
+                msg: `No existe un historial de pago con el id: ${payment_id}`
+            });
         }
     } catch (error) {
         console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};

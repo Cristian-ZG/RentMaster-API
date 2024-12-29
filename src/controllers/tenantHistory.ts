@@ -3,15 +3,15 @@ import { TenantHistory } from '../models/tenantHistory';
 import { Apartment } from '../models/apartment';
 import { Tenant } from '../models/tenant';
 
-//Obtener Historial de arrendatarios
+//Obtener Historial de arrendatarios.
 export const getTenantHistorys = async (req: Request, res: Response) => {
 
     const listTenantHistorys = await TenantHistory.findAll();
 
-    res.json(listTenantHistorys)
-}
+    res.json(listTenantHistorys);
+};
 
-//Obtener un Historial arrendatarios para un apartamento especifico
+//Obtener un Historial arrendatarios para un apartamento especifico.
 export const getApartmentHistory = async (req: Request, res: Response) => {
 
     const { apartment_id } = req.params;
@@ -30,12 +30,12 @@ export const getApartmentHistory = async (req: Request, res: Response) => {
         res.json(history);
     } else {
         res.status(404).json({
-            msg: 'No existe un historial para el apartamento con el id: ' + apartment_id
-        })
+            msg: `No existe un historial para el apartamento con el id: ${apartment_id}`
+        });
     }
-}
+};
 
-//Obtener un Historial apartamentos para un arrendatario especifico
+//Obtener un Historial apartamentos para un arrendatario especifico.
 export const getTenantHistory = async (req: Request, res: Response) => {
 
     const { tenant_id } = req.params;
@@ -54,12 +54,12 @@ export const getTenantHistory = async (req: Request, res: Response) => {
         res.json(history);
     } else {
         res.status(404).json({
-            msg: 'No existe un historial para el arrendatario con el id: ' + tenant_id
-        })
+            msg: `No existe un historial para el arrendatario con el id: ${tenant_id}`
+        });
     }
-}
+};
 
-//Agregar un historial
+//Agregar un historial.
 export const postTenantHistory = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -73,11 +73,11 @@ export const postTenantHistory = async (req: Request, res: Response) => {
         console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};
 
-//Actualizar un historial
+//Actualizar un historial.
 export const updateHistory = async (req: Request, res: Response) => {
 
     const { body } = req;
@@ -93,13 +93,13 @@ export const updateHistory = async (req: Request, res: Response) => {
             })
         } else {
             res.status(404).json({
-                msg: 'No existe un historial con el id: ' + history_id
+                msg: `No existe un historial con el id: ${history_id}`
             })
         }
     } catch (error) {
         console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};

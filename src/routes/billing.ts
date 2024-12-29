@@ -5,6 +5,6 @@ import validateAdmin from './validate-admin';
 
 const router = Router();
 
-router.get('/generate-inovice/:tenant_id', validateToken, generateInvoice)
+router.get('/generate-inovice/:tenant_id', validateToken, generateInvoice);
 
 export default router;

@@ -4,7 +4,7 @@ import { Tenant } from '../models/tenant';
 import jwt from 'jsonwebtoken';
 import { SupportDocument } from '../models/support_document';
 
-// Agregar Arrendatario
+//Agregar Arrendatario.
 export const newTenant = async (req: Request, res: Response) => {
 
     const { name, email, password, payment_status, phone_number } = req.body;
@@ -14,8 +14,8 @@ export const newTenant = async (req: Request, res: Response) => {
 
     if(tenant){
         return res.status(400).json({
-            msg: 'Ya existe un usuario con el correo: ' + email
-        })
+            msg: `Ya existe un usuario con el correo: ${email}`
+        });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -28,20 +28,19 @@ export const newTenant = async (req: Request, res: Response) => {
             password: hashedPassword,
             payment_status: payment_status,
             phone_number: phone_number
-        })
+        });
         res.json({
             msg: 'Arrendatario ' + name + ' creado exitosamente.'
-        })
+        });
     } catch (error) {
         res.status(400).json({
             msg: 'Ocurrio un error',
             error
-        })
-    }
-    
-}
+        });
+    }  
+};
 
-//Modificar Arrendatario
+//Modificar Arrendatario.
 export const updateTenant = async (req:Request, res:Response) => {
     const { body } = req;
     const { tenant_id } = req.params;
@@ -53,29 +52,29 @@ export const updateTenant = async (req:Request, res:Response) => {
             await tenant.update(body);
             res.json({
                 msg: 'El arrendatario fue actulizado correctamente.'
-            })
+            });
         } else {
             res.status(404).json({
-                msg: 'No existe un arrendatario con el id: ' + tenant_id
-            })
+                msg: `No existe un arrendatario con el id: ${tenant_id}`
+            });
         }
     } catch (error) {
         console.log(error)
         res.json({
             msg: 'Ocurrio un error.'
-        })
+        });
     }
-}
+};
 
-//Obtener Arrendatarios
+//Obtener Arrendatarios.
 export const getTenants = async (req: Request, res: Response) => {
 
     const listTenants = await Tenant.findAll();
 
-    res.json(listTenants)
-}
+    res.json(listTenants);
+};
 
-//Obtener un Arrendatario especifico
+//Obtener un Arrendatario especifico.
 export const getTenant = async (req: Request, res: Response) => {
 
     const { tenant_id } = req.params;
@@ -85,12 +84,12 @@ export const getTenant = async (req: Request, res: Response) => {
         res.json(tenant)
     } else {
         res.status(404).json({
-            msg: 'No existe un arrendatario con el id: ' + tenant_id
-        })
+            msg: `No existe un arrendatario con el id: ${tenant_id}`
+        });
     }
-}
+};
 
-//Eliminar un arrendatario especifico
+//Eliminar un arrendatario especifico.
 export const deleteTenant = async (req: Request, res: Response) => {
 
     const { tenant_id } = req.params;
@@ -98,15 +97,15 @@ export const deleteTenant = async (req: Request, res: Response) => {
 
     if(!tenant){
         res.status(404).json({
-            msg: 'No existe un arrendatariocon el id: ' + tenant_id
-        })
+            msg: `No existe un arrendatariocon el id: ${tenant_id}`
+        });
     } else {
         await tenant.destroy();
         res.json({
             msg: 'El arrendatario fue eliminado correctamente.'
-        })
+        });
     }
-}
+};
 
 export const cargaDocumentos = async (req: Request, res: Response) => {
     try {

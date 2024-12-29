@@ -20,36 +20,36 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const loginAT = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     try {
-        //Validamos si el usuario es un Administrador
+        //Validamos si el usuario es un Administrador.
         let user = yield admin_1.Admin.findOne({ where: { email } });
         let role = 'admin';
-        let userId = user === null || user === void 0 ? void 0 : user.admin_id; // Asignamos el ID desde la tabla admins
-        //Si el usuario no se encuentra en los administradores validamos si es un arrendatario
+        let userId = user === null || user === void 0 ? void 0 : user.admin_id; // Asignamos el ID desde la tabla admins.
+        //Si el usuario no se encuentra en los administradores validamos si es un arrendatario.
         if (!user) {
             user = yield tenant_1.Tenant.findOne({ where: { email } });
             role = 'tenant';
-            userId = user === null || user === void 0 ? void 0 : user.tenant_id; // Asignamos el ID desde la tabla tenants
+            userId = user === null || user === void 0 ? void 0 : user.tenant_id; //Asignamos el ID desde la tabla tenants.
         }
-        // Si el usuario no existe en ninguna de las tablas
+        //Si el usuario no existe en ninguna de las tablas.
         if (!user) {
             return res.status(400).json({
-                msg: 'No existe un usuario con el email: ' + email
+                msg: `No existe un usuario con el email: ${email}`
             });
         }
-        // Validamos la contraseña
+        //Validamos la contraseña.
         const passwordValid = yield bcrypt_1.default.compare(password, user.password);
         if (!passwordValid) {
             return res.status(400).json({
                 msg: 'Contraseña incorrecta.'
             });
         }
-        // Generamos el token JWT, incluyendo el rol (admin o tenant) y el id en el payload
+        //Generamos el token JWT, incluyendo el rol (admin o tenant) y el id en el payload.
         const token = jsonwebtoken_1.default.sign({
-            id: userId, // Añadimos el ID del usuario al token
+            id: userId, //Añadimos el ID del usuario al token.
             email: email,
-            role: role // Añadimos el rol al token
-        }, process.env.SECRET_KEY || 'Y3WNQxvzFtLZEsx');
-        // Respondemos con el token y el rol
+            role: role //Añadimos el rol al token.
+        }, process.env.SECRET_KEY || 'tofob!owr9spoV1ga4Oz');
+        //Respondemos con el token y el rol.
         res.json({
             token,
             role,

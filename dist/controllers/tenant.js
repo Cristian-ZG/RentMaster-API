@@ -16,14 +16,14 @@ exports.getTenantDocuments = exports.cargaDocumentos = exports.deleteTenant = ex
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const tenant_1 = require("../models/tenant");
 const support_document_1 = require("../models/support_document");
-// Agregar Arrendatario
+//Agregar Arrendatario.
 const newTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, password, payment_status, phone_number } = req.body;
     //Validacion si el usuario existe en la base de datos.
     const tenant = yield tenant_1.Tenant.findOne({ where: { email: email } });
     if (tenant) {
         return res.status(400).json({
-            msg: 'Ya existe un usuario con el correo: ' + email
+            msg: `Ya existe un usuario con el correo: ${email}`
         });
     }
     const hashedPassword = yield bcrypt_1.default.hash(password, 10);
@@ -48,7 +48,7 @@ const newTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.newTenant = newTenant;
-//Modificar Arrendatario
+//Modificar Arrendatario.
 const updateTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { tenant_id } = req.params;
@@ -62,7 +62,7 @@ const updateTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         else {
             res.status(404).json({
-                msg: 'No existe un arrendatario con el id: ' + tenant_id
+                msg: `No existe un arrendatario con el id: ${tenant_id}`
             });
         }
     }
@@ -74,13 +74,13 @@ const updateTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.updateTenant = updateTenant;
-//Obtener Arrendatarios
+//Obtener Arrendatarios.
 const getTenants = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listTenants = yield tenant_1.Tenant.findAll();
     res.json(listTenants);
 });
 exports.getTenants = getTenants;
-//Obtener un Arrendatario especifico
+//Obtener un Arrendatario especifico.
 const getTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;
     const tenant = yield tenant_1.Tenant.findByPk(tenant_id);
@@ -89,18 +89,18 @@ const getTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     else {
         res.status(404).json({
-            msg: 'No existe un arrendatario con el id: ' + tenant_id
+            msg: `No existe un arrendatario con el id: ${tenant_id}`
         });
     }
 });
 exports.getTenant = getTenant;
-//Eliminar un arrendatario especifico
+//Eliminar un arrendatario especifico.
 const deleteTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;
     const tenant = yield tenant_1.Tenant.findByPk(tenant_id);
     if (!tenant) {
         res.status(404).json({
-            msg: 'No existe un arrendatariocon el id: ' + tenant_id
+            msg: `No existe un arrendatariocon el id: ${tenant_id}`
         });
     }
     else {

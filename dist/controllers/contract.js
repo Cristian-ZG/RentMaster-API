@@ -13,7 +13,7 @@ exports.getTenantContract = exports.getApartmentContract = exports.getContracts 
 const contract_1 = require("../models/contract");
 const tenant_1 = require("../models/tenant");
 const apartment_1 = require("../models/apartment");
-//Agregar un contrato
+//Agregar un contrato.
 const postContract = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
@@ -30,7 +30,7 @@ const postContract = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.postContract = postContract;
-//Actualizar un contrato
+//Actualizar un contrato.
 const updateContract = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { contract_id } = req.params;
@@ -44,7 +44,7 @@ const updateContract = (req, res) => __awaiter(void 0, void 0, void 0, function*
         }
         else {
             res.status(404).json({
-                msg: 'No existe un historial con el id: ' + contract_id
+                msg: 'No existe un contrato con el id: ' + contract_id
             });
         }
     }
@@ -56,16 +56,16 @@ const updateContract = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.updateContract = updateContract;
-//Obtener contratos
+//Obtener contratos.
 const getContracts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listContracts = yield contract_1.Contract.findAll();
     res.json(listContracts);
 });
 exports.getContracts = getContracts;
-//Obtener contratos para un apartamento especifico
+//Obtener contratos para un apartamento especifico.
 const getApartmentContract = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { apartment_id } = req.params;
-    // Busca los contratos para el apartamento específico
+    //Busca los contratos para el apartamento específico.
     const contract = yield contract_1.Contract.findAll({
         where: { apartment_id: apartment_id },
         include: [{
@@ -79,15 +79,15 @@ const getApartmentContract = (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
     else {
         res.status(404).json({
-            msg: 'No existe un contrato para el apartamento con el id: ' + apartment_id
+            msg: `No existe un contrato para el apartamento con el id: ${apartment_id}`
         });
     }
 });
 exports.getApartmentContract = getApartmentContract;
-//Obtener un contrato para un arrendatario especifico
+//Obtener un contrato para un arrendatario especifico.
 const getTenantContract = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;
-    // Busca los contratos para el arrendatario específico
+    // Busca los contratos para el arrendatario específico.
     const contract = yield contract_1.Contract.findAll({
         where: { tenant_id: tenant_id },
         include: [{
@@ -101,7 +101,7 @@ const getTenantContract = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     else {
         res.status(404).json({
-            msg: 'No existe un contrato para el arrendatario con el id: ' + tenant_id
+            msg: `No existe un contrato para el arrendatario con el id: ${tenant_id}`
         });
     }
 });

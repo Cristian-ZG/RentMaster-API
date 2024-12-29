@@ -13,13 +13,13 @@ exports.updateHistory = exports.postTenantHistory = exports.getTenantHistory = e
 const tenantHistory_1 = require("../models/tenantHistory");
 const apartment_1 = require("../models/apartment");
 const tenant_1 = require("../models/tenant");
-//Obtener Historial de arrendatarios
+//Obtener Historial de arrendatarios.
 const getTenantHistorys = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listTenantHistorys = yield tenantHistory_1.TenantHistory.findAll();
     res.json(listTenantHistorys);
 });
 exports.getTenantHistorys = getTenantHistorys;
-//Obtener un Historial arrendatarios para un apartamento especifico
+//Obtener un Historial arrendatarios para un apartamento especifico.
 const getApartmentHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { apartment_id } = req.params;
     // Busca el historial de arrendatarios para el apartamento específico
@@ -36,12 +36,12 @@ const getApartmentHistory = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     else {
         res.status(404).json({
-            msg: 'No existe un historial para el apartamento con el id: ' + apartment_id
+            msg: `No existe un historial para el apartamento con el id: ${apartment_id}`
         });
     }
 });
 exports.getApartmentHistory = getApartmentHistory;
-//Obtener un Historial apartamentos para un arrendatario especifico
+//Obtener un Historial apartamentos para un arrendatario especifico.
 const getTenantHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;
     // Busca el historial de apartamentos para el arrendatario específico
@@ -58,12 +58,12 @@ const getTenantHistory = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     else {
         res.status(404).json({
-            msg: 'No existe un historial para el arrendatario con el id: ' + tenant_id
+            msg: `No existe un historial para el arrendatario con el id: ${tenant_id}`
         });
     }
 });
 exports.getTenantHistory = getTenantHistory;
-//Agregar un historial
+//Agregar un historial.
 const postTenantHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
@@ -80,7 +80,7 @@ const postTenantHistory = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.postTenantHistory = postTenantHistory;
-//Actualizar un historial
+//Actualizar un historial.
 const updateHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { history_id } = req.params;
@@ -94,7 +94,7 @@ const updateHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         else {
             res.status(404).json({
-                msg: 'No existe un historial con el id: ' + history_id
+                msg: `No existe un historial con el id: ${history_id}`
             });
         }
     }

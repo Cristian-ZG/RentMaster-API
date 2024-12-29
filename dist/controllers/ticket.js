@@ -13,13 +13,13 @@ exports.updateTicket = exports.postTickets = exports.getTenantTickets = exports.
 const ticket_1 = require("../models/ticket");
 const apartment_1 = require("../models/apartment");
 const tenant_1 = require("../models/tenant");
-//Obtener tickets
+//Obtener tickets.
 const getTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listTickets = yield ticket_1.Ticket.findAll();
     res.json(listTickets);
 });
 exports.getTickets = getTickets;
-//Obtener un ticket especifico
+//Obtener un ticket especifico.
 const getTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { ticket_id } = req.params;
     const ticket = yield ticket_1.Ticket.findByPk(ticket_id);
@@ -28,15 +28,15 @@ const getTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     else {
         res.status(404).json({
-            msg: 'No existe un apartamento con el id: ' + ticket_id
+            msg: `No existe un apartamento con el id: ${ticket_id}`
         });
     }
 });
 exports.getTicket = getTicket;
-//Obtener Tickets para un apartamento especifico
+//Obtener Tickets para un apartamento especifico.
 const getApartmentTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { apartment_id } = req.params;
-    // Busca el historial de tickets para el apartamento específico
+    // Busca el historial de tickets para el apartamento específico.
     const history = yield ticket_1.Ticket.findAll({
         where: { apartment_id: apartment_id },
         include: [{
@@ -50,12 +50,12 @@ const getApartmentTickets = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     else {
         res.status(404).json({
-            msg: 'No existen tickets para el apartamento con el id: ' + apartment_id
+            msg: `No existen tickets para el apartamento con el id: ${apartment_id}`
         });
     }
 });
 exports.getApartmentTickets = getApartmentTickets;
-//Obtener Tickets para un arrendatario especifico
+//Obtener Tickets para un arrendatario especifico.
 const getTenantTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;
     // Busca el historial de tickets para el arrendatario específico
@@ -72,12 +72,12 @@ const getTenantTickets = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     else {
         res.status(404).json({
-            msg: 'No existen tickets para el arrendatario con el id: ' + tenant_id
+            msg: `No existen tickets para el arrendatario con el id: ${tenant_id}`
         });
     }
 });
 exports.getTenantTickets = getTenantTickets;
-//Agregar un ticket
+//Agregar un ticket.
 const postTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
@@ -94,7 +94,7 @@ const postTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.postTickets = postTickets;
-//Actualizar un ticket
+//Actualizar un ticket.
 const updateTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { ticket_id } = req.params;
@@ -108,7 +108,7 @@ const updateTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         else {
             res.status(404).json({
-                msg: 'No existe un ticket con el id: ' + ticket_id
+                msg: `No existe un ticket con el id: ${ticket_id}`
             });
         }
     }

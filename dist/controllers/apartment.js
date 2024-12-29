@@ -13,13 +13,13 @@ exports.updateApartment = exports.postApartment = exports.deleteApartment = expo
 const apartment_1 = require("../models/apartment");
 const tenant_1 = require("../models/tenant");
 const admin_1 = require("../models/admin");
-//Obtener Apartamentos
+//Obtener todos Apartamentos registrados.
 const getApartments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listApartments = yield apartment_1.Apartment.findAll();
     res.json(listApartments);
 });
 exports.getApartments = getApartments;
-//Obtener un Apartamento especifico
+//Obtener un Apartamento especifico segun el ID.
 const getApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { apartment_id } = req.params;
     const apartment = yield apartment_1.Apartment.findByPk(apartment_id);
@@ -28,16 +28,16 @@ const getApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     else {
         res.status(404).json({
-            msg: 'No existe un apartamento con el id: ' + apartment_id
+            msg: `No existe un apartamento con el id: ${apartment_id}`
         });
     }
 });
 exports.getApartment = getApartment;
-//Obtener apartamentos para un arrendatario especifico
+//Obtener apartamentos para un arrendatario especifico segun el ID.
 const getApartmentTenant = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;
-    //Buscar apartamentos para el tenant
-    const apartment = yield apartment_1.Apartment.findAll({
+    //Buscar apartamentos para el tenant.
+    const apartments = yield apartment_1.Apartment.findAll({
         where: { tenant_id: tenant_id },
         include: [{
                 model: tenant_1.Tenant,
@@ -45,21 +45,22 @@ const getApartmentTenant = (req, res) => __awaiter(void 0, void 0, void 0, funct
             }],
         order: [['createdAt', 'DESC']]
     });
-    if (apartment.length > 0) {
-        res.json(apartment);
+    if (apartments.length > 0) {
+        res.json(apartments);
     }
     else {
         res.status(404).json({
-            msg: 'No existen apartamentos para el arrendatario con el id: ' + tenant_id
+            msg: `No existen apartamentos para el arrendatario con el id: ${tenant_id}`,
+            apartments: [],
         });
     }
 });
 exports.getApartmentTenant = getApartmentTenant;
-//Obtener apartamentos para un adminespecifico
+//Obtener apartamentos para un administrador especifico segun su ID.
 const getApartmentAdmin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { admin_id } = req.params;
-    //Buscar apartamentos para el admin
-    const apartment = yield apartment_1.Apartment.findAll({
+    //Buscar apartamentos para el admin.
+    const apartments = yield apartment_1.Apartment.findAll({
         where: { admin_id: admin_id },
         include: [{
                 model: admin_1.Admin,
@@ -67,17 +68,18 @@ const getApartmentAdmin = (req, res) => __awaiter(void 0, void 0, void 0, functi
             }],
         order: [['createdAt', 'DESC']]
     });
-    if (apartment.length > 0) {
-        res.json(apartment);
+    if (apartments.length > 0) {
+        res.json(apartments);
     }
     else {
         res.status(404).json({
-            msg: 'No existen apartamentos para el administrador con el id: ' + admin_id
+            msg: `No existen apartamentos para el administrador con el id: ${admin_id}`,
+            apartments: [],
         });
     }
 });
 exports.getApartmentAdmin = getApartmentAdmin;
-//Eliminar un Apartamento especifico
+//Eliminar un Apartamento especifico segun su ID.
 const deleteApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { apartment_id } = req.params;
     const apartment = yield apartment_1.Apartment.findByPk(apartment_id);
@@ -94,7 +96,7 @@ const deleteApartment = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.deleteApartment = deleteApartment;
-//Agregar un Apartamento
+//Agregar un Apartamento.
 const postApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
@@ -104,14 +106,13 @@ const postApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
     catch (error) {
-        console.log(error);
         res.json({
             msg: 'Ocurrio un error.'
         });
     }
 });
 exports.postApartment = postApartment;
-//Actualizar un Apartamento
+//Actualizar un Apartamento.
 const updateApartment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { apartment_id } = req.params;
@@ -130,7 +131,6 @@ const updateApartment = (req, res) => __awaiter(void 0, void 0, void 0, function
         }
     }
     catch (error) {
-        console.log(error);
         res.json({
             msg: 'Ocurrio un error.'
         });

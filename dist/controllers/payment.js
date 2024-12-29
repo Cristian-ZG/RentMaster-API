@@ -12,16 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updatePayment = exports.postPayment = exports.getPayment = exports.getPayments = void 0;
 const payment_1 = require("../models/payment");
 const tenant_1 = require("../models/tenant");
-//Obtener Historial de Pagos
+//Obtener Historial de Pagos.
 const getPayments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const listPayments = yield payment_1.Payment.findAll();
     res.json(listPayments);
 });
 exports.getPayments = getPayments;
-//Obtener un Historial de pagos para un arrendatario especifico
+//Obtener un Historial de pagos para un arrendatario especifico.
 const getPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { tenant_id } = req.params;
-    // Busca el historial de pagos para el arrendatario específico
+    //Busca el historial de pagos para el arrendatario específico.
     const payment = yield payment_1.Payment.findAll({
         where: { tenant_id: tenant_id },
         include: [{
@@ -35,12 +35,12 @@ const getPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     else {
         res.status(404).json({
-            msg: 'No existe un historial de pagos para el arrendatario con el id: ' + tenant_id
+            msg: `No existe un historial de pagos para el arrendatario con el id: ${tenant_id}`
         });
     }
 });
 exports.getPayment = getPayment;
-//Agregar un pago
+//Agregar un pago.
 const postPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     try {
@@ -57,7 +57,7 @@ const postPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.postPayment = postPayment;
-//Actualizar un pago
+//Actualizar un pago.
 const updatePayment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body } = req;
     const { payment_id } = req.params;
@@ -71,7 +71,7 @@ const updatePayment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         else {
             res.status(404).json({
-                msg: 'No existe un historial de pago con el id: ' + payment_id
+                msg: `No existe un historial de pago con el id: ${payment_id}`
             });
         }
     }

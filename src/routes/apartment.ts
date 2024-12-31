@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { deleteApartment, getApartment, getApartmentAdmin, getApartments, getApartmentTenant, postApartment, updateApartment } from '../controllers/apartment';
-import validateToken from './validate-token';
-import validateAdmin from './validate-admin';
+import validateToken from '../middlewares/validate-token';
+import validateAdmin from '../middlewares/validate-admin';
 
 const router = Router();
 

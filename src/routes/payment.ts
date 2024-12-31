@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import validateToken from './validate-token';
+import validateToken from '../middlewares/validate-token';
 import { getPayment, getPayments, postPayment, updatePayment } from '../controllers/payment';
-import validateAdmin from './validate-admin';
+import validateAdmin from '../middlewares/validate-admin';
 
 const router = Router();
 

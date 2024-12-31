@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import validateToken from './validate-token';
-import validateAdmin from './validate-admin';
+import validateToken from '../middlewares/validate-token';
+import validateAdmin from '../middlewares/validate-admin';
 import { getApartmentTickets, getTenantTickets, getTicket, getTickets, postTickets, updateTicket } from '../controllers/ticket';
 
 const router = Router();

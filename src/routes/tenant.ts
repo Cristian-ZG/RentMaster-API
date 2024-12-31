@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { cargaDocumentos, deleteTenant, getTenant, getTenantDocuments, getTenants, /*loginTenant,*/ newTenant, updateTenant } from '../controllers/tenant';
-import validateToken from './validate-token';
-import validateAdmin from './validate-admin';
+import validateToken from '../middlewares/validate-token';
+import validateAdmin from '../middlewares/validate-admin';
 import upload from '../middlewares/multer-config';
 
 const router = Router();
